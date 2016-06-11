@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "listFiles": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "target": "es5",
+    "outDir": "./js/tmp/",
+    "rootDir": "./ts/",
+    "sourceMap": false,
+    "diagnostics": true
+  },
+  "files": [
+    "ts/index.ts",
+    "typings/benchmark.d.ts",
+    "typings/Q.d.ts",
+    "typings/handlebars.d.ts"
+  ]
+}
