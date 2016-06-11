@@ -1,0 +1,102 @@
+<form id="testcase-form" class="form-horizontal">
+    <fieldset>
+        <legend>Details</legend>
+        <div class="form-group">
+            <label class="col-sm-2 col-xs-1 col-lg-1 control-label">Title</label>
+            <div class="col-sm-10 col-xs-6 col-lg-5">
+                <input type="text" class="form-control" id="testcase-title" name="testCase[title]" placeholder="My test case" value="{{title}}">
+            </div>
+
+            <label class="col-sm-2 col-xs-1 col-lg-1 control-label">Slug</label>
+            <div class="col-sm-10 col-xs-4 col-lg-5">
+                <input type="text" class="form-control" id="testcase-slug" name="testCase[slug]" placeholder="auto-generated-uri" value="{{slug}}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-12 col-lg-12 control-label">Description</label>
+            <div class="col-sm-12 col-lg-12">
+                <textarea class="form-control" rows="2" id="testcase-description" name="testCase[description]" placeholder="About the test case. This information is visible to other users and search engines.">{{description}}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10 col-lg-offset-4 col-lg-4">
+                <label class="radio-inline">
+                    <input type="radio" id="testcase-status-public" name="testCase[status]" value="public" {{#if_eq status "public"}}checked{{/if_eq}}> Public
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" id="testcase-status-private" name="testCase[status]" value="private" {{#if_eq status "private"}}checked{{/if_eq}}> Private
+                </label>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Dependencies</legend>
+        <!--
+        <div class="form-group">
+            <label class="col-sm-12 control-label">3<sup>rd</sup> party libraries:</label>
+            <div class="col-sm-12">
+                <select id="testcase-thirdpartyjslibs" name="testCase[thirdpartyjslibs]" class="form-control">
+                    <option>jQuery 1.x</option>
+                    <option>jQuery 2.x</option>
+                    <option>Angular 1.x</option>
+                    <option>Angular 2.x</option>
+                </select>
+            </div>
+        </div>
+        -->
+
+        <div class="form-group">
+            <label class="col-sm-12 control-label">HTML code</label>
+            <div class="col-sm-12">
+                <textarea id="testcase-htmlcode" class="form-control" rows="3" name="testCase[harness][html]" placeholder="HTML tags allowed in here.">{{harness.html}}</textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-12 col-xs-1 col-lg-1 control-label">Setup</label>
+            <div class="col-sm-12 col-xs-5 col-lg-5">
+                <textarea id="testcase-setup" class="form-control" rows="4" name="testCase[harness][setUp]" placeholder="Only JavaScript code here, no HTML tags.">{{harness.setUp}}</textarea>
+            </div>
+
+            <label class="col-sm-12 col-xs-1 col-lg-1 control-label">Tear down</label>
+            <div class="col-sm-12 col-xs-5 col-lg-5">
+                <textarea id="testcase-teardown" class="form-control" rows="4" name="testCase[harness][tearDown]" placeholder="Only JavaScript code here, no HTML tags.">{{harness.tearDown}}</textarea>
+            </div>
+        </div>
+
+    </fieldset>
+
+    <fieldset>
+        <legend>Test entries</legend>
+        {{#each entries}}
+        <fieldset class="testcase-test testcase-test-{{@key}}">
+            <legend>Test snippet code #{{@key}}</legend>
+            <div class="form-group">
+                <label class="col-sm-2 col-xs-1 col-lg-1 control-label">Title</label>
+                <div class="col-sm-10 col-xs-11 col-lg-11">
+                    <input type="text" name="testCase[entries][{{@key}}][title]" class="testcase-test-title form-control" value="{{this.title}}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-sm-12 control-label">Code</label>
+                <div class="col-sm-12">
+                    <textarea name="testCase[entries][{{@key}}][code]" class="testcase-test-code form-control" rows="4">{{this.code}}</textarea>
+                </div>
+            </div>
+        </fieldset>
+        {{/each}}
+
+        <div class="row">
+            <div class="col-sm-12 col-lg-12" style="text-align: right;">
+                <a href="javascript:void(0);" id="add-test-link">Add code snippet &raquo;</a>
+            </div>
+        </div>
+    </fieldset>
+
+    <button name="run" id="run-testcase-button" class="btn btn-run">Run</button>
+</form>

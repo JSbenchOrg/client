@@ -1,0 +1,54 @@
+<div class="row row-harness">
+    <div class="col-lg-4">
+        <div class="panel panel-default panel-harness">
+            <div class="panel-heading">HTML code <sup>?</sup></div>
+            <div class="panel-body">
+                <textarea id="testcase-htmlcode" class="form-control lang-html" rows="4" name="testCase[harness][html]" placeholder="HTML setup code ...">{{harness.html}}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="panel panel-default panel-harness">
+            <div class="panel-heading">SetUp <sup>?</sup></div>
+            <div class="panel-body">
+                <textarea id="testcase-setup" class="form-control lang-javascript" rows="4" name="testCase[harness][setUp]" placeholder="Setup JS code ...">{{harness.setUp}}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="panel panel-default panel-harness">
+            <div class="panel-heading">tearDown <sup>?</sup></div>
+            <div class="panel-body">
+                <textarea id="testcase-teardown" class="form-control lang-javascript" rows="4" name="testCase[harness][tearDown]" placeholder="Tear down JS code ...">{{harness.tearDown}}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row row-entries-and-results">
+    <div class="col-lg-6 col-entries">
+        <div class="panel panel-default">
+            <div class="panel-heading">Test cases <a href="javascript:void(0);" style="float:right;" id="add-test-link">&#9735; Add code snippet</a></div>
+
+            <div class="panel-body">
+                <div class="col-lg-12" id="entries">
+                    {{#each entries}}
+                        {{> entry}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-results">
+        <div class="panel panel-default panel-info">
+            <div class="panel-heading">Results</div>
+            <div class="panel-body" id="results">
+                <i>Results will appear here ...</i>
+            </div>
+        </div>
+        <div id="chart-div" style="min-height: 300px;"></div>
+    </div>
+</div>
