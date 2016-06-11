@@ -493,6 +493,10 @@ var App = (function() {
     };
 
     function ChartPanel(reportTotals) {
+        if (!reportTotals) {
+            return false;
+        }
+
         this.reportTotals = reportTotals;
         var $chartDiv = document.getElementById('chart-div');
         if ($chartDiv.className === 'rendered') {
