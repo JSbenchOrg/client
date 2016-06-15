@@ -1,10 +1,10 @@
-class Util {
-    public static randomString(len, charSet) {
+export class Util {
+    public static randomString(len: number, charSet?: string): string {
         charSet = charSet || 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         var randomString = '';
         for (var i = 0; i < len; i++) {
             var randomPoz = Math.floor(Math.random() * charSet.length);
-            randomString += charSet.substring(randomPoz,randomPoz+1);
+            randomString += charSet.substring(randomPoz, randomPoz + 1);
         }
         return randomString;
     }
@@ -15,13 +15,13 @@ class Util {
      * @param {object} o
      * @returns {number}
      */
-    public static getObjLength(o) {
+    public static getObjLength(o: Object): number {
         if (typeof o !== 'object' || o === null) {
             return 0;
         }
 
-        var l = 0;
-        var k;
+        var l: number = 0;
+        var k: any;
 
         if (typeof Object.keys === 'function') {
             l = Object.keys(o).length;

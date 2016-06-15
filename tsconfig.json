@@ -7,13 +7,11 @@
     "target": "es5",
     "outDir": "./js/tmp/",
     "rootDir": "./ts/",
-    "sourceMap": false,
-    "diagnostics": true
+    "sourceMap": true,
+    "diagnostics": false,
+    "allowJs": true
   },
   "files": [
-    "ts/index.ts",
-    "typings/benchmark.d.ts",
-    "typings/Q.d.ts",
-    "typings/handlebars.d.ts"
+    "ts/index.ts"
   ]
 }
