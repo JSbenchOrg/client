@@ -75,6 +75,10 @@ export class TestCase {
         return this._env;
     }
 
+    public isReadyToRun(): boolean {
+        return (Util.getObjLength(this.entries) < 2);
+    }
+
     public static createEmpty(): TestCaseEntityInterface {
         return <TestCaseEntityInterface>{
             title: '',

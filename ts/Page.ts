@@ -6,6 +6,7 @@ export class Page {
     protected testCase: TestCase;
 
     public constructor(testCase: TestCase) {
+        console.log('TestCase constructor ...');
         this.testCase = testCase;
     }
 
@@ -16,6 +17,7 @@ export class Page {
     }
 
     public render() {
+        // Render 'Sidebar'.
         App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-form.hbs')
             .then((r) => {
                 Page.renderElem('testcase-sidebar-form', <string>r.getBody(), this.testCase);
@@ -25,6 +27,7 @@ export class Page {
                 this.bindRunBtn();
             });
 
+        // Render 'Listings'.
         Q.spread([
             App.http.getJSON(App.config.clientUri + '/tests.json?exclude=revision_number,description,harness,entries,status&orderBy=latest&limit=25'),
             App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-listing.hbs')
@@ -32,6 +35,7 @@ export class Page {
             Page.renderElem('testcase-sidebar-listing', <string>dataR.getBody(), tplR.getBody());
         });
 
+        // Render 'Main form'.
         Q.spread([
             App.http.getHTML(App.config.clientUri + '/tpl/testcase-entry-form.hbs'),
             App.http.getHTML(App.config.clientUri + '/tpl/testcase-main-form.hbs')

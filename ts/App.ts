@@ -13,7 +13,11 @@ export class App {
         App.http = new Http();
         this.registerHandlebarsHelpers();
 
-        App.router();
+        // Start the router.
+        App.router().then(function(page) {
+            // Render current (detected) page.
+            page.render();
+        });
     }
 
     protected static router(): Promise<Page> {
