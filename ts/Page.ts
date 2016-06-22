@@ -19,7 +19,7 @@ export class Page {
     public render() {
         // Render 'Sidebar'.
         App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-form.hbs')
-            .then((r) => {
+            .then((r: HttpResponseInterface) => {
                 Page.renderElem('testcase-sidebar-form', <string>r.getBody(), this.testCase);
             })
             .then(() => {
@@ -42,8 +42,19 @@ export class Page {
         ], (tplEntryR: HttpResponseInterface, tplMainR: HttpResponseInterface) => {
             Handlebars.registerPartial('entry', tplEntryR.getBody());
             Page.renderElem('testcase-main-form', <string>tplMainR.getBody(), this.testCase);
+        }).then(() => {
+            this.bindAddNewTestBtn();
         });
     }
+
+    public static renderChart() {
+        /*
+        return App.http.getJSON(`${App.config.clientUri}/test/${response.body.slug}/totals/by-browser.json`)
+            .then(function(response) {
+                new ChartPanel(response.body);
+            });
+        */
+    };
 
     protected bindSaveBtn() {
         var $saveBtn = document.getElementById('save-testcase-button');
@@ -93,6 +104,23 @@ export class Page {
 
         }, false);
     }
+
+    protected bindAddNewTestBtn() {
+        // 'Add new test' button.
+        var $btn = document.getElementById('add-test-link');
+
+        $btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            App.http.getHTML(`${App.config.clientUri}/tpl/testcase-entry-form.hbs`).then(function(response: HttpResponseInterface) {
+                var template = Handlebars.compile(response.getBody());
+                var html = template({ id: 4, title: '', code: ''});
+                var $newEntry = document.createElement('div');
+                $newEntry.innerHTML = html;
+                var $entries = document.getElementById('entries');
+                $entries.appendChild($newEntry.firstChild);
+            });
+        });
+    };
 
     public static toggleRenderBtn(id: string, status: string) {
         var $btn = <HTMLButtonElement>document.getElementById(id);

@@ -1,42 +1,40 @@
-import {Http} from './Http';
+import {Http, HttpResponseInterface} from './Http';
 import {Page} from './Page';
 import {TestCase, TestCaseEntityInterface} from './TestCase';
-import Promise = Q.Promise;
+import {Router} from './Router';
 
 export class App {
     public static config: AppConfigInterface;
     public static http: Http;
+    public router: Router;
 
     public constructor(config: AppConfigInterface) {
         console.log('App starting ...');
         App.config = config;
         App.http = new Http();
+        this.router = new Router();
         this.registerHandlebarsHelpers();
 
-        // Start the router.
-        App.router().then(function(page) {
-            // Render current (detected) page.
-            page.render();
-        });
-    }
-
-    protected static router(): Promise<Page> {
-        var path = window.location.pathname;
-        var fragments = path.split('/');
-        var entity = fragments[1];
-        var slug = fragments[2];
-
-        if (entity === 'test') {
-            return App.http.getJSON(`${App.config.clientUri}/test/${slug}.json`).then(function (r) {
-                var testCase = new TestCase(<TestCaseEntityInterface>r.getBody());
-                return new Page(testCase);
-            });
-        } else {
-            return Q.fcall(function() {
+        // Add 'default' routes.
+        this.router.addRoute('/', function() {
+            Q.fcall(function() {
                 var testCase = new TestCase(TestCase.createEmpty());
                 return new Page(testCase);
+            }).then(function(page: Page) {
+                page.render();
             });
-        }
+        });
+
+        this.router.addRoute('/test/{slug}', function(slug: string) {
+            return App.http.getJSON(`${App.config.clientUri}/test/${slug}.json`).then(function (r: HttpResponseInterface) {
+                var testCase = new TestCase(<TestCaseEntityInterface>r.getBody());
+                return new Page(testCase);
+            }).then(function(page: Page) {
+                page.render();
+            });
+        });
+
+        this.router.run();
     }
 
     protected registerHandlebarsHelpers() {
@@ -75,7 +73,7 @@ export class App {
                 trace: error.toString()
             };
 
-            App.http.postJSON(`App.config.clientUri/log.json`, errorDTO).then(function() {
+            App.http.postJSON(`${App.config.clientUri}/log.json`, errorDTO).then(function() {
                 timeStamp = (new Date()).getTime();
             });
         };

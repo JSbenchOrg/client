@@ -1,4 +1,5 @@
 import {Util} from './Utils';
+import {RunnerResultInterface} from './Runner';
 
 export class TestCase {
     protected _title: string;
@@ -124,6 +125,7 @@ interface TestCaseEntryInterface {
     id: number;
     title: string;
     code: string;
+    results?: RunnerResultInterface;
 }
 
 export interface TestCaseEnvInterface {

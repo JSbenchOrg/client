@@ -35,4 +35,8 @@ export class Util {
 
         return l;
     }
+
+    public static escapeForRegex(str: string): string {
+        return str.replace(/[-\/\\^$*+?.()|[\]]/g, '\\$&');
+    }
 }

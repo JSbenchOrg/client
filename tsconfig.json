@@ -12,6 +12,11 @@
     "allowJs": true
   },
   "files": [
-    "ts/index.ts"
+    "ts/index.ts",
+    "typings/handlebars.d.ts",
+    "typings/Q.d.ts",
+    "typings/formToObject.d.ts",
+    "typings/platform.d.ts",
+    "typings/benchmark.d.ts"
   ]
 }
