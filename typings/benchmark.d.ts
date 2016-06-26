@@ -3,15 +3,15 @@
 // Definitions by: Asana <https://asana.com>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare module "benchmark" {
-    class Benchmark {
+
+    declare class Benchmark {
         static deepClone<T>(value: T): T;
         static each(obj: Object | any[], callback: Function, thisArg?: any): void;
         static extend(destination: Object, ...sources: Object[]): Object;
         static filter<T>(arr: T[], callback: (value: T) => any, thisArg?: any): T[];
         static filter<T>(arr: T[], filter: string, thisArg?: any): T[];
         static forEach<T>(arr: T[], callback: (value: T) => any, thisArg?: any): void;
-        static formatNumber(num: number): string;
+        static formatNumber(num: number | string): string;
         static forOwn(obj: Object, callback: Function, thisArg?: any): void;
         static hasKey(obj: Object, key: string): boolean;
         static indexOf<T>(arr: T[], value: T, fromIndex?: number): number;
@@ -32,6 +32,7 @@ declare module "benchmark" {
         constructor(name: string, options?: Benchmark.Options);
         constructor(options: Benchmark.Options);
 
+        id: number;
         aborted: boolean;
         compiled: Function | string;
         count: number;
@@ -60,7 +61,7 @@ declare module "benchmark" {
         toString(): string;
     }
 
-    namespace Benchmark {
+    declare namespace Benchmark {
         export interface Options {
             async?: boolean;
             defer?: boolean;
@@ -188,5 +189,6 @@ declare module "benchmark" {
         }
     }
 
+declare module "benchmark" {
     export = Benchmark;
 }

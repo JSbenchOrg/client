@@ -8,8 +8,7 @@
     "outDir": "./js/tmp/",
     "rootDir": "./ts/",
     "sourceMap": true,
-    "diagnostics": false,
-    "allowJs": true
+    "diagnostics": true
   },
   "files": [
     "ts/index.ts",
@@ -17,6 +16,9 @@
     "typings/Q.d.ts",
     "typings/formToObject.d.ts",
     "typings/platform.d.ts",
-    "typings/benchmark.d.ts"
-  ]
+    "typings/benchmark.d.ts",
+    "typings/google-charts.d.ts",
+    "typings/lodash.d.ts"
+  ],
+  "compileOnSave": true
 }

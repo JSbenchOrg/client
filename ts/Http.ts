@@ -49,7 +49,7 @@ export class Http {
         }.bind(this);
 
         if (request.getBody()) {
-            xhr.send(Http.fromJSONToString(request.getBody()));
+            xhr.send(request.getBody());
         } else {
             xhr.send();
         }

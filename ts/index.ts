@@ -1,6 +1,6 @@
 import {App} from './App';
 
-let app = new App({
-    serverUri: 'http://api.jsbench.org',
+new App({
+    serverUri: 'http://api-dev.jsbench.org/v2',
     clientUri: 'http://' + window.location.host
 });

@@ -1,16 +1,16 @@
 import {Util} from './Utils';
-import {RunnerResultInterface} from './Runner';
+import {RunnerResult} from './Runner';
 
 export class TestCase {
     protected _title: string;
     protected _slug: string;
     protected _description: string;
     protected _status: string;
-    protected _harness: TestCaseHarnessInterface;
-    protected _entries: TestCaseEntryInterface[];
-    protected _env: TestCaseEnvInterface;
+    protected _harness: TestCaseHarness;
+    protected _entries: TestCaseEntry[];
+    protected _env: TestCaseEnv;
 
-    public constructor(testCase: TestCaseEntityInterface) {
+    public constructor(testCase: TestCaseEntity) {
         this.title = testCase.title;
         this.slug = testCase.slug;
         this.description = testCase.description;
@@ -52,83 +52,103 @@ export class TestCase {
         return this._status;
     }
 
-    public set harness(harness: TestCaseHarnessInterface) {
+    public set harness(harness: TestCaseHarness) {
         this._harness = harness;
     }
 
-    public get harness(): TestCaseHarnessInterface {
+    public get harness(): TestCaseHarness {
         return this._harness;
     }
 
-    public set entries(entries: TestCaseEntryInterface[]) {
+    public set entries(entries: TestCaseEntry[]) {
         this._entries = entries;
     }
 
-    public get entries(): TestCaseEntryInterface[] {
+    public get entries(): TestCaseEntry[] {
         return this._entries;
     }
 
-    public set env(env: TestCaseEnvInterface) {
+    public addEntry(entry: TestCaseEntry): void {
+        this._entries[entry.id] = entry;
+    }
+
+    public removeEntry(id: number): void {
+        delete this._entries[id];
+    }
+
+    public set env(env: TestCaseEnv) {
         this._env = env;
     }
 
-    public get env(): TestCaseEnvInterface {
+    public get env(): TestCaseEnv {
         return this._env;
     }
 
     public isReadyToRun(): boolean {
-        return (Util.getObjLength(this.entries) < 2);
+        return (Util.getObjLength(this.entries) > 2);
     }
 
-    public static createEmpty(): TestCaseEntityInterface {
-        return <TestCaseEntityInterface>{
+    public static create(testCaseEntity: TestCaseEntity) {
+        return new TestCase(testCaseEntity);
+    }
+
+    public static createEmptyEntity(): TestCaseEntity {
+        return <TestCaseEntity>{
             title: '',
             slug: Util.randomString(10),
             description: '',
             status: 'public',
-            harness: <TestCaseHarnessInterface>{
+            harness: <TestCaseHarness>{
                 html: '',
                 setUp: '',
                 tearDown: ''
             },
             entries: [
-                <TestCaseEntryInterface>{id: 1, title: '', code: ''},
-                <TestCaseEntryInterface>{id: 2, title: '', code: ''}
+                <TestCaseEntry>{id: 1, title: '', code: ''},
+                <TestCaseEntry>{id: 2, title: '', code: ''}
             ]
         };
     }
 
-    public static createFromDOMElement(id: string): TestCaseEntityInterface {
+    public static createEntityFromDOMElement(id: string): TestCaseEntity {
         var $elem = document.getElementById(id);
-        var result =  <{testCase: TestCaseEntityInterface}>formToObject($elem);
+        var result =  <{testCase: TestCaseEntity}>formToObject($elem);
         return result.testCase;
+    }
+
+    public static createEmptyTestCaseEntry(id: number) {
+        return <TestCaseEntry>{
+            id: id,
+            title: '',
+            code: ''
+        };
     }
 }
 
-export interface TestCaseEntityInterface {
+export interface TestCaseEntity {
     title: string;
     slug: string;
     description: string;
     status: string;
-    harness: TestCaseHarnessInterface;
-    entries: TestCaseEntryInterface[];
-    env: TestCaseEnvInterface;
+    harness: TestCaseHarness;
+    entries: TestCaseEntry[];
+    env: TestCaseEnv;
 }
 
-interface TestCaseHarnessInterface {
+interface TestCaseHarness {
     html: string;
     setUp: string;
     tearDown: string;
 }
 
-interface TestCaseEntryInterface {
+interface TestCaseEntry {
     id: number;
     title: string;
     code: string;
-    results?: RunnerResultInterface;
+    results?: RunnerResult;
 }
 
-export interface TestCaseEnvInterface {
+export interface TestCaseEnv {
     browserName: string;
     browserVersion: string;
     os: string;

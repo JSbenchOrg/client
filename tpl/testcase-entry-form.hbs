@@ -3,9 +3,9 @@
         <div class="col-lg-11">
             <div class="testcase-test-heading"><b>Code snippet</b></div>
         </div>
-        <div class="col-lg-1">
+        <div class="col-lg-1" {{#if_sm this.id 3}}style="display:none;"{{/if_sm}}>
             <div class="testcase-test-remove">
-                <p><button class="btn btn-default btn-sm" data-entry-id="{{this.id}}">x</button></p>
+                <p><button class="btn btn-default btn-sm" data-entry-id="{{this.id}}">remove</button></p>
             </div>
         </div>
     </div>

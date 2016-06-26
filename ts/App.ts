@@ -1,6 +1,6 @@
 import {Http, HttpResponseInterface} from './Http';
 import {Page} from './Page';
-import {TestCase, TestCaseEntityInterface} from './TestCase';
+import {TestCase, TestCaseEntity} from './TestCase';
 import {Router} from './Router';
 
 export class App {
@@ -18,7 +18,7 @@ export class App {
         // Add 'default' routes.
         this.router.addRoute('/', function() {
             Q.fcall(function() {
-                var testCase = new TestCase(TestCase.createEmpty());
+                var testCase = new TestCase(TestCase.createEmptyEntity());
                 return new Page(testCase);
             }).then(function(page: Page) {
                 page.render();
@@ -26,8 +26,8 @@ export class App {
         });
 
         this.router.addRoute('/test/{slug}', function(slug: string) {
-            return App.http.getJSON(`${App.config.clientUri}/test/${slug}.json`).then(function (r: HttpResponseInterface) {
-                var testCase = new TestCase(<TestCaseEntityInterface>r.getBody());
+            return App.http.getJSON(`${App.config.serverUri}/test/${slug}.json`).then(function (r: HttpResponseInterface) {
+                var testCase = new TestCase(<TestCaseEntity>r.getBody());
                 return new Page(testCase);
             }).then(function(page: Page) {
                 page.render();
@@ -40,6 +40,14 @@ export class App {
     protected registerHandlebarsHelpers() {
         Handlebars.registerHelper('if_eq', function(a: any, b: any, opts: any) {
             if (a === b) {
+                return opts.fn(this);
+            } else {
+                return opts.inverse(this);
+            }
+        });
+
+        Handlebars.registerHelper('if_sm', function(a: any, b: any, opts: any) {
+            if (a < b) {
                 return opts.fn(this);
             } else {
                 return opts.inverse(this);
@@ -73,7 +81,7 @@ export class App {
                 trace: error.toString()
             };
 
-            App.http.postJSON(`${App.config.clientUri}/log.json`, errorDTO).then(function() {
+            App.http.postJSON(`${App.config.serverUri}/log.json`, errorDTO).then(function() {
                 timeStamp = (new Date()).getTime();
             });
         };

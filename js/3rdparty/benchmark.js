@@ -510,7 +510,6 @@
         var result,
             anchor = freeDefine ? freeDefine.amd : Benchmark,
             prop = uid + 'createFunction';
-
         runScript((freeDefine ? 'define.amd.' : 'Benchmark.') + prop + '=function(' + args + '){' + body + '}');
         result = anchor[prop];
         delete anchor[prop];
