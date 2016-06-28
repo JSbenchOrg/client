@@ -32,7 +32,7 @@ export class Page {
 
         // Render 'Listings'.
         Q.spread([
-            App.http.getJSON(App.config.serverUri + '/tests.json?exclude=revision_number,description,harness,entries,status&orderBy=latest&limit=25'),
+            // App.http.getJSON(App.config.serverUri + '/tests.json?exclude=revision_number,description,harness,entries,status&orderBy=latest&limit=25'),
             App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-listing.hbs')
         ], (dataR: HttpResponseInterface, tplR: HttpResponseInterface) => {
             Page.renderElem('testcase-sidebar-listing', <string>dataR.getBody(), tplR.getBody());
@@ -50,12 +50,21 @@ export class Page {
         });
     }
 
+    public static renderErrorPopup(error: ErrorResponseDTO) {
+        console.log(error);
+        var msgTxt: string = 'Some kind of error occurred.';
+        if (error.error && error.error.message) {
+            msgTxt = error.error.message;
+        }
+        window.alert(msgTxt);
+    }
+
     public renderChartPanel() {
         var panel = new TotalChartPanel(this, this.testCase);
         panel.getData().then((r: HttpResponseInterface) => {
             panel.render(<TotalByBrowser[]>r.getBody());
-        }, function(error) {
-            console.error('renderChartPanel():', error);
+        }, function(error: ErrorResponseDTO) {
+            Page.renderErrorPopup(error);
         });
     };
 
@@ -78,8 +87,9 @@ export class Page {
             App.http.postJSON(App.config.serverUri + '/tests.json', testCaseDTO)
                 .then(function() {
                     Page.toggleRenderBtn('save-testcase-button', 'activate');
-                }, function(error) {
-                    console.error(error);
+                }, function(response: HttpResponseInterface) {
+                    Page.toggleRenderBtn('save-testcase-button', 'activate');
+                    Page.renderErrorPopup(<ErrorResponseDTO>response.getBody());
                 });
         });
     }
@@ -121,7 +131,7 @@ export class Page {
                         console.log('Rendering Chart Panel ...');
                         _page.renderChartPanel();
                     }, function(error) {
-                        console.error(error);
+                        Page.renderErrorPopup(error);
                     });
                 });
 
@@ -224,5 +234,16 @@ export class Page {
 interface ButtonEventTarget extends EventTarget {
     dataset: {
         entryId: number;
+    };
+}
+
+interface ErrorResponseDTO {
+    error: {
+        message: string,
+        data: Array<{
+            reason: string,
+            code: string
+        }>,
+        code: string
     };
 }

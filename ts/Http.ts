@@ -23,6 +23,11 @@ export class Http {
         return JSON.stringify(jsonObj);
     }
 
+    protected static contentTypeIsJSON(header: string): boolean {
+        if (!header) { return false; }
+        return !!header.match(/application\/json/i);
+    }
+
     public sendRequest(request: HttpRequestInterface): Promise<HttpResponseInterface> {
         var deferred = Q.defer<HttpResponseInterface>();
         var xhr = typeof XMLHttpRequest !== 'undefined' ? new XMLHttpRequest() : null;
@@ -36,17 +41,22 @@ export class Http {
             }
         })(request.getHeaders());
 
+        var _response = this._response;
         xhr.onload = function() {
-            var response: HttpResponseInterface;
             if (xhr.readyState === Http.XHR_DONE) {
-                response = this.response = new Response(xhr.status, xhr.response);
+                _response = new Response(xhr.status, xhr.response);
+                // Convert the response body to JSON.
+                // Keep the raw body untouched.
+                if (Http.contentTypeIsJSON(this.getResponseHeader('content-type'))) {
+                    _response.setBody(Http.fromStringToJSON(_response.getBodyRaw()));
+                }
                 if (xhr.status === Http.HTTP_SUCCESS || xhr.status === Http.HTTP_CREATED) {
-                    deferred.resolve(response);
+                    deferred.resolve(_response);
                 } else {
-                    deferred.reject(response);
+                    deferred.reject(_response);
                 }
             }
-        }.bind(this);
+        };
 
         if (request.getBody()) {
             xhr.send(request.getBody());
@@ -83,18 +93,17 @@ export class Http {
         return this.sendRequest(
             new Request('GET', url, {'Content-Type': 'application/json', 'Accept': 'application/json'}, null)
         ).then(function(response: HttpResponseInterface) {
-            response.setBody(
-                Http.fromStringToJSON(<string>response.getBody())
-            );
             return response;
         });
     };
 
-    public postJSON(url: string, body: Object) {
+    public postJSON(url: string, body: Object): Promise<HttpResponseInterface> {
         var bodyString = Http.fromJSONToString(body);
         return this.sendRequest(
             new Request('POST', url, {'Content-Type': 'application/json', 'Accept': 'application/json'}, bodyString)
-        );
+        ).then(function(response: HttpResponseInterface) {
+            return response;
+        });
     };
 
     public getHTML(url: string) {

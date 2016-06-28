@@ -30,8 +30,10 @@ export class Router {
     */
     protected matchRoute(path: string): RequestedRoute {
         var matchFound: Array<string>;
+        var preparedPath: string;
         for (var i = 0; i < this.routes.length; i++) {
-            matchFound = path.match(new RegExp(Router.preparePath(this.routes[i].path), 'i'));
+            preparedPath = `^${Router.preparePath(this.routes[i].path)}$`;
+            matchFound = path.match(new RegExp(preparedPath, 'i'));
             if (matchFound) {
                 var args = matchFound.slice(1, matchFound.length);
                 return <RequestedRoute>{
