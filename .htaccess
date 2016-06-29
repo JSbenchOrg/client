@@ -1,8 +1,13 @@
+DirectoryIndex index.html
 <IfModule mod_rewrite.c>
     RewriteEngine on
     RewriteBase /
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} !=/favicon.ico
-    RewriteRule ^(.*)$ index.html [L,QSA]
+
+    RewriteCond %{HTTP_HOST} ^www\.jsbench\.org$ [NC]
+    RewriteRule ^(.*)$ http://jsbench.org/$1 [R=302,L,QSA]
+
+    RewriteCond %{HTTP_HOST} ^jsbench\.org$ [NC]
+    RewriteCond %{REQUEST_FILENAME} !-f [NC]
+    RewriteCond %{REQUEST_FILENAME} !-d [NC]
+    RewriteRule ^(.*)$ "index.html" [QSA,L]
 </IfModule>
