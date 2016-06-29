@@ -82,8 +82,6 @@ export class Runner {
             });
         }, 2000);
 
-        console.log('aici');
-
         return deferredQ.promise;
     }
 

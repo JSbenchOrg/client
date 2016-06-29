@@ -63,8 +63,8 @@ export class Page {
         var panel = new TotalChartPanel(this, this.testCase);
         panel.getData().then((r: HttpResponseInterface) => {
             panel.render(<TotalByBrowser[]>r.getBody());
-        }, function(error: ErrorResponseDTO) {
-            Page.renderErrorPopup(error);
+        }, function(response: HttpResponseInterface) {
+            Page.renderErrorPopup(<ErrorResponseDTO>response.getBody());
         });
     };
 
