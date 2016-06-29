@@ -2,6 +2,7 @@ import {Http, HttpResponseInterface} from './Http';
 import {Page} from './Page';
 import {TestCase, TestCaseEntity} from './TestCase';
 import {Router} from './Router';
+import Promise = Q.Promise;
 
 export class App {
     public static config: AppConfigInterface;
@@ -34,7 +35,12 @@ export class App {
             });
         });
 
-        this.router.run();
+        this.router.run().then(function(a) {
+            console.log('Page rendered.');
+        }, function(error: Error) {
+            Page.renderErrorPopup(error.message);
+            window.location.href = '/';
+        });
     }
 
     protected registerHandlebarsHelpers() {

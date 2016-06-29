@@ -50,11 +50,12 @@ export class Page {
         });
     }
 
-    public static renderErrorPopup(error: ErrorResponseDTO) {
-        console.log(error);
+    public static renderErrorPopup(error: ErrorResponseDTO | string) {
         var msgTxt: string = 'Some kind of error occurred.';
-        if (error.error && error.error.message) {
+        if (typeof error === 'object' && typeof error.error !== 'undefined' && error.error.message) {
             msgTxt = error.error.message;
+        } else if (typeof error === 'string') {
+            msgTxt = error;
         }
         window.alert(msgTxt);
     }

@@ -1,14 +1,19 @@
+import defer = Q.defer;
 export class Router {
     protected routes: Route[] = [];
 
     public run(customPath?: string) {
+        var deferred = Q.defer();
+
         var path: string = customPath ? customPath : window.location.pathname;
         var route = this.matchRoute(path);
         if (route) {
-            return route.action.apply(null, route.args);
+            deferred.resolve(route.action.apply(null, route.args));
         } else {
-            return new Error('No valid route found.');
+            deferred.reject(new Error('No valid route found.'));
         }
+
+        return deferred.promise;
     }
 
     public addRoute(path: string, action: Function) {
