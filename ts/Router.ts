@@ -47,7 +47,7 @@ export class Router {
     }
 
     protected static preparePath(path: string) {
-        return path.replace(/{[a-z]+}/g, '([a-z0-9]+)');
+        return path.replace(/{[a-z]+}/g, '([a-z0-9-]+)');
     }
 }
 

@@ -126,10 +126,12 @@ export class Page {
                         // Re-activate 'Run' btn.
                         Page.toggleRenderBtn('run-testcase-button', 'activate');
                         // Send the test results.
-                        _page.sendResults(results);
-                        // Render 'Chart Panel'.
-                        console.log('Rendering Chart Panel ...');
-                        _page.renderChartPanel();
+                        _page.sendResults(results).then(function(){
+                            // Render 'Chart Panel'.
+                            console.log('Rendering Chart Panel ...');
+                            _page.renderChartPanel();
+                        });
+
                     }, function(error) {
                         Page.renderErrorPopup(error);
                     });
