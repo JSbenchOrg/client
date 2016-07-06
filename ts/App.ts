@@ -2,7 +2,6 @@ import {Http, HttpResponseInterface} from './Http';
 import {Page} from './Page';
 import {TestCase, TestCaseEntity} from './TestCase';
 import {Router} from './Router';
-import Promise = Q.Promise;
 
 export class App {
     public static config: AppConfigInterface;
@@ -52,8 +51,8 @@ export class App {
             }
         });
 
-        Handlebars.registerHelper('if_sm', function(a: any, b: any, opts: any) {
-            if (a < b) {
+        Handlebars.registerHelper('if_gt', function(a: any, b: any, opts: any) {
+            if (a > b) {
                 return opts.fn(this);
             } else {
                 return opts.inverse(this);

@@ -20,7 +20,7 @@ export class TotalChartPanel implements Panel {
 
     // @todo Simplify this by adding a 3rdparty chart library.
     public render(data: TotalByBrowser[]) {
-        var $chartDiv = document.getElementById('chart-div');
+        var $chartDiv = document.getElementById('chart-results');
         if ($chartDiv.className === 'rendered') {
             this._render(data);
         } else {
@@ -32,7 +32,7 @@ export class TotalChartPanel implements Panel {
     }
 
     protected _render(data: TotalByBrowser[]) {
-        var $chartDiv = document.getElementById('chart-div');
+        var $chartDiv = document.getElementById('chart-results');
         var chart = new google.visualization.BarChart($chartDiv);
 
         var browsers: any[] = [];
@@ -61,8 +61,8 @@ export class TotalChartPanel implements Panel {
             },
             bars: 'horizontal',
             chartArea: {
-                width: '80%',
-                'height': '80%'
+                width: '100%',
+                height: '80%'
             }
         };
 

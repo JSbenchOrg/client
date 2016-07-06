@@ -194,9 +194,7 @@ input, textarea, button {
     box-shadow: inset 0 0 10px rgba(125,125,125,0.40);
     */
 }
-.testcase-test-remove {
-    float: right;
-}
+
 .testcase-test-heading { padding: 1em 0 1em; }
 .testcase-test-code {
     -webkit-transition: all 0.2s ease-out;
@@ -210,8 +208,19 @@ input, textarea, button {
 }
 
 /** Results **/
-#results-table th { text-align:left; }
-#chart-div.rendered { display: block; }
+#results-table th {
+    text-align:left;
+}
+
+#chart-results {
+    width: 100%;
+    min-width: 640px;
+    min-height: 300px;
+    display:none;
+}
+#chart-results.rendered {
+    display: block;
+}
 
 /** Footer **/
 #footer {

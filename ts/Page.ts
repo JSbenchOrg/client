@@ -21,22 +21,22 @@ export class Page {
 
     public render() {
         // Render 'Sidebar'.
-        App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-form.hbs')
-            .then((r: HttpResponseInterface) => {
-                Page.renderElem('testcase-sidebar-form', <string>r.getBody(), this.testCase);
-            })
-            .then(() => {
-                this.bindSaveBtn();
-                this.bindRunBtn();
-            });
+        // App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-form.hbs')
+            // .then((r: HttpResponseInterface) => {
+                // Page.renderElem('testcase-sidebar-form', <string>r.getBody(), this.testCase);
+            // })
+            // .then(() => {
+                // this.bindSaveBtn();
+                // this.bindRunBtn();
+            // });
 
         // Render 'Listings'.
-        Q.spread([
+       // Q.spread([
             // App.http.getJSON(App.config.serverUri + '/tests.json?exclude=revision_number,description,harness,entries,status&orderBy=latest&limit=25'),
-            App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-listing.hbs')
-        ], (dataR: HttpResponseInterface, tplR: HttpResponseInterface) => {
-            Page.renderElem('testcase-sidebar-listing', <string>dataR.getBody(), tplR.getBody());
-        });
+            // App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-listing.hbs')
+        // ], (dataR: HttpResponseInterface, tplR: HttpResponseInterface) => {
+            // Page.renderElem('testcase-sidebar-listing', <string>dataR.getBody(), tplR.getBody());
+        // });
 
         // Render 'Main form'.
         Q.spread([
@@ -46,7 +46,9 @@ export class Page {
             Handlebars.registerPartial('entry', tplEntryR.getBody());
             Page.renderElem('testcase-main-form', <string>tplMainR.getBody(), this.testCase);
         }).then(() => {
+            this.bindSaveBtn();
             this.bindAddTestEntryBtn();
+            this.bindRunBtn();
         });
     }
 
@@ -77,7 +79,7 @@ export class Page {
 
             Page.toggleRenderBtn('save-testcase-button', 'disable');
 
-            var testCaseDTO = TestCase.createEntityFromDOMElement('wrapper');
+            var testCaseDTO = TestCase.createEntityFromDOMElement('testcase-main-form');
             // Append the browser data.
             testCaseDTO.env = <TestCaseEnv>{
                 browserName: platform.name,
@@ -105,7 +107,7 @@ export class Page {
 
             Page.toggleRenderBtn('run-testcase-button', 'disable');
 
-            var testCaseDTO = TestCase.createEntityFromDOMElement('wrapper');
+            var testCaseDTO = TestCase.createEntityFromDOMElement('testcase-main-form');
 
             // Append the browser data.
             testCaseDTO.env = <TestCaseEnv>{
@@ -205,7 +207,7 @@ export class Page {
 
         // Refresh the testCase object.
         // @todo Model is not keeping up with DOM changes. Refactor.
-        var testCaseDTO = TestCase.createEntityFromDOMElement('wrapper');
+        var testCaseDTO = TestCase.createEntityFromDOMElement('testcase-main-form');
 
         // Append the results.
         // Keep the original form order.
