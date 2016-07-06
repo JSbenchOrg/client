@@ -6,14 +6,12 @@
         <thead>
             <tr>
                 <th width="20%">Title</th>
-                <th width="40%">Code</th>
                 <th>Results</th>
             </tr>
         </thead>
         {{#each entries}}
             <tr class="testcase-test-result" id="testcase-test-result-{{@key}}">
                 <td>{{this.title}}</td>
-                <td><pre>{{this.code}}</pre></td>
                 <td id="testcase-test-result-text-{{@key}}"><i class="testcase-test-result-statusText">Waiting ...</i></td>
             </tr>
         {{/each}}
