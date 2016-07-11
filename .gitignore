@@ -4,3 +4,5 @@ error.log
 ts/*.js
 ts/*.js.map
 /js/tmp
+public/js/app.js
+public/js/app.min.js

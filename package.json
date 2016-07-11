@@ -5,7 +5,9 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "gulp": "^3.9.1",
+    "gulp-server-livereload": "^1.8.1",
     "gulp-typescript": "^2.12.1",
+    "tsify": "^1.0.0",
     "typescript": "^1.8.7",
     "vinyl-source-stream": "^1.1.0"
   }
