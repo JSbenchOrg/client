@@ -169,9 +169,9 @@ input, textarea, button {
 /** Sidebar **/
 #sidebar-wrapper { background-color: #eee; }
 .sidebar-nav { position: relative; }
-.sidebar-copyright { padding: 20px; }
-.sidebar-copyright p { font-size: 0.70em; line-height: 1.7em; text-align: center; }
-.sidebar-listing-item { display: block; cursor: pointer; }
+.sidebar-listing-item {
+    font-size:0.8em;
+}
 
 /** Main **/
 

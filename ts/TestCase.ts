@@ -85,7 +85,7 @@ export class TestCase {
     }
 
     public isReadyToRun(): boolean {
-        return (Util.getObjLength(this.entries) > 2);
+        return (Util.getObjLength(this.entries) >= 2);
     }
 
     public static create(testCaseEntity: TestCaseEntity) {

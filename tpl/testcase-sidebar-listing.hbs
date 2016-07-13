@@ -1,14 +1,10 @@
-<hr>
-
 <div class="row">
     <div class="col-lg-12">
-        <div class="form-group">
-            <label class="control-label">Latest tests</label><br>
-            <div id="sidebar-listing-items">
-                {{#each entries}}
-                    <a class="sidebar-listing-item" data-slug="{{this.slug}}">{{this.title}}</a>
-                {{/each}}
-            </div>
+        <p>Latest tests</p>
+        <div id="sidebar-listing-items">
+            {{#each this}}
+                <a class="sidebar-listing-item" href="/test/{{this.slug}}">{{this.title}}</a>
+            {{/each}}
         </div>
     </div>
 </div>

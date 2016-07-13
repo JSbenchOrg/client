@@ -31,12 +31,12 @@ export class Page {
             // });
 
         // Render 'Listings'.
-       // Q.spread([
-            // App.http.getJSON(App.config.serverUri + '/tests.json?exclude=revision_number,description,harness,entries,status&orderBy=latest&limit=25'),
-            // App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-listing.hbs')
-        // ], (dataR: HttpResponseInterface, tplR: HttpResponseInterface) => {
-            // Page.renderElem('testcase-sidebar-listing', <string>dataR.getBody(), tplR.getBody());
-        // });
+        Q.spread([
+            App.http.getJSON(App.config.serverUri + '/tests.json?exclude=revision_number,description,harness,entries,status&orderBy=latest&limit=25'),
+            App.http.getHTML(App.config.clientUri + '/tpl/testcase-sidebar-listing.hbs')
+        ], (dataR: HttpResponseInterface, tplR: HttpResponseInterface) => {
+            Page.renderElem('sidebar-listing', <string>tplR.getBody(), <Object>dataR.getBody());
+        });
 
         // Render 'Main form'.
         Q.spread([

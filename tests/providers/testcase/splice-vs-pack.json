@@ -1,0 +1,38 @@
+{
+  "title": "splice vs pack",
+  "slug": "splice-vs-pack",
+  "description": "",
+  "tags": ["splice", "pack", "array"],
+  "status": "public",
+  "harness": {
+    "html": "<script>\nfunction packArray(tgtArray) {\n   if (!tgtArray || !tgtArray.length) return;\n   var srcIndex = 0;\n   var dstIndex = 0;\n   var arrayLength = tgtArray.length ;\n   do {\n       var currentItem = tgtArray[srcIndex]; \n       if (currentItem !== undefined) {\n         if (srcIndex != dstIndex) {\n            tgtArray[dstIndex] = currentItem ;\n         }\n         dstIndex++;\n       } \n       srcIndex++;\n   } while (srcIndex != arrayLength) ;\n    dstIndex--;\n    tgtArray.length = dstIndex > 0 ? dstIndex : 0 ;\n}\n</script>",
+    "setUp": "window.theArray = [];\n  window.removeRatio = 10;",
+    "tearDown": "window.theArray = undefined;\nwindow.removeRatio = undefined;"
+  },
+  "entries": {
+    "1": {
+      "title": "Add only; N=1000",
+      "code": "var N = 1000;\nfor(var i=0; i<N; i++){\n  window.theArray[i] = {val:i};\n}"
+    },
+    "2": {
+      "title": "Add and then splice; N=1000",
+      "code": "var N = 1000;\nfor(var i=0; i<N; i++){\n  window.theArray[i] = {val:i};\n}\n\n// see http://stackoverflow.com/questions/9287441/how-to-delete-multiple-items-of-an-array-by-value\nvar i = window.theArray.length;\nwhile (i--) {\n  // following simulates removing by value\n  if(window.theArray[i].val % window.removeRatio === 0){\n    window.theArray.splice(i, 1);\n  }\n}"
+    },
+    "3": {
+      "title": "Add, delete, pack; N=1000",
+      "code": "var N = 1000;\nfor(var i=0; i<N; i++){\n  window.theArray[i] = {val:i};\n}\n\n// see http://stackoverflow.com/questions/28400207/most-efficient-way-to-delete-from-array\nfor(var i=0; i<window.theArray.length; i++){\n  // following simulates removing by value\n  if(window.theArray[i].val % window.removeRatio === 0){\n    window.theArray[i] = undefined;\n  }\n}\npackArray(window.theArray);"
+    },
+    "4": {
+      "title": "Add only; N=100000",
+      "code": "var N = 100000;\nfor(var i=0; i<N; i++){\n  window.theArray[i] = {val:i};\n}"
+    },
+    "5": {
+      "title": "Add and then splice; N=100000",
+      "code": "var N = 100000;\nfor(var i=0; i<N; i++){\n  window.theArray[i] = {val:i};\n}\n\n// see http://stackoverflow.com/questions/9287441/how-to-delete-multiple-items-of-an-array-by-value\nvar i = window.theArray.length;\nwhile (i--) {\n  // following simulates removing by value\n  if(window.theArray[i].val % window.removeRatio === 0){\n    window.theArray.splice(i, 1);\n  }\n}"
+    },
+    "6": {
+      "title": "Add, delete, pack; N=100000",
+      "code": "var N = 100000;\nfor(var i=0; i<N; i++){\n  window.theArray[i] = {val:i};\n}\n\n// see http://stackoverflow.com/questions/28400207/most-efficient-way-to-delete-from-array\nfor(var i=0; i<window.theArray.length; i++){\n  // following simulates removing by value\n  if(window.theArray[i].val % window.removeRatio === 0){\n    window.theArray[i] = undefined;\n  }\n}\npackArray(window.theArray);"
+    }
+  }
+}

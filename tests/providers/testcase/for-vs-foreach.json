@@ -1,0 +1,34 @@
+{
+  "title": "for vs forEach",
+  "slug": "for-vs-foreach",
+  "description": "",
+  "tags": ["for", "foreach", "iterate"],
+  "status": "public",
+  "harness": {
+    "html": "<script>\n  var i, values = [],\n      sum = 0;\n  for (i = 0; i < 10000; i++) {\n   values[i] = i;\n  }\n  \n  function add(val) {\n   sum += val;\n  }\n</script>",
+    "setUp": "",
+    "tearDown": ""
+  },
+  "entries": {
+    "1": {
+      "title": "forEach",
+      "code": "values.forEach(add);"
+    },
+    "2": {
+      "title": "for loop, simple",
+      "code": "for (i = 0; i < values.length; i++) {\n add(values[i]);\n}"
+    },
+    "3": {
+      "title": "for loop, cached length",
+      "code": "var len = values.length;\nfor (i = 0; i < len; i++) {\n add(values[i]);\n}"
+    },
+    "4": {
+      "title": "for loop, reverse",
+      "code": "for (i = values.length - 1; i >= 0; i--) {\n add(values[i]);\n}"
+    },
+    "5": {
+      "title": "forEach more local",
+      "code": "(function() {\n var sum = 0;\n values.forEach(function(val) {\n  sum += val;\n });\n})();"
+    }
+  }
+}
