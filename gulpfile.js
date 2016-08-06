@@ -33,8 +33,8 @@ gulp.task('dependencies', function() {
         'node_modules/platform/platform.js',
         'node_modules/q/q.js'
     ])
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('public/js'));
+    .pipe(concat('vendor.js'))
+    .pipe(gulp.dest('public/js'));
 });
 
 gulp.task('browser-sync', ['dependencies', 'tsc'], function() {
@@ -51,6 +51,10 @@ gulp.task('tsc:watch', ['tsc'], function () {
 
 gulp.task('browser-reload', function () {
     browserSync.reload();
+});
+
+gulp.task('test', function () {
+    // @todo
 });
 
 gulp.task('browser-reload:watch', ['browser-sync'], function () {

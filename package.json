@@ -2,6 +2,10 @@
   "name": "jsbench-client",
   "version": "2.0.0",
   "dependencies": {},
+  "scripts": {
+    "postinstall": "gulp generate-config",
+    "start": "gulp"
+  },
   "devDependencies": {
     "benchmark": "github:bestiejs/benchmark.js",
     "browser-sync": "^2.14.0",
