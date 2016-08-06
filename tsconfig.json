@@ -5,7 +5,7 @@
     "noImplicitAny": true,
     "removeComments": true,
     "target": "es5",
-    "outDir": "./js/tmp/",
+    "outDir": "./public/js/tmp/",
     "rootDir": "./ts/",
     "sourceMap": true,
     "diagnostics": true
