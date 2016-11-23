@@ -2,10 +2,10 @@ import {Util} from './Utils';
 import {RunnerResult} from './Runner';
 
 export class TestCase {
-    protected _title: string;
-    protected _slug: string;
-    protected _description: string;
-    protected _status: string;
+    protected _title: string = null;
+    protected _slug: string = null;
+    protected _description: string = null;
+    protected _status: string = null;
     protected _harness: TestCaseHarness;
     protected _entries: TestCaseEntry[];
     protected _env: TestCaseEnv;
@@ -112,7 +112,7 @@ export class TestCase {
 
     public static createEntityFromDOMElement(id: string): TestCaseEntity {
         var $elem = document.getElementById(id);
-        var result =  <{testCase: TestCaseEntity}>formToObject($elem);
+        var result =  <{testCase: TestCaseEntity}>formToObject($elem, {includeEmptyValuedElements: true});
         return result.testCase;
     }
 

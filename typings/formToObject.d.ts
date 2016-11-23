@@ -1,1 +1,1 @@
-declare function formToObject<T>(elem: string | HTMLElement): Object;
+declare function formToObject<T>(elem: string | HTMLElement, options?: {}): Object;

@@ -5,13 +5,13 @@
     "noImplicitAny": true,
     "removeComments": true,
     "target": "es5",
-    "outDir": "./js/tmp/",
-    "rootDir": "./ts/",
+    "outDir": "./dist/js/tmp/",
+    "rootDir": "./src/",
     "sourceMap": true,
     "diagnostics": true
   },
   "files": [
-    "ts/index.ts",
+    "src/index.ts",
     "typings/handlebars.d.ts",
     "typings/Q.d.ts",
     "typings/formToObject.d.ts",

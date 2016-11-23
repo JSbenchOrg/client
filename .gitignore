@@ -3,4 +3,4 @@ error.log
 /node_modules
 ts/*.js
 ts/*.js.map
-/js/tmp
+/dist/js/tmp
